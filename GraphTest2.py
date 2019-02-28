@@ -92,11 +92,6 @@ class Graph:
                     sort = self.toopological_sort(vertice, visited, sort)
         return sort
 
-    def dijkstra(self, u):
-        
-                
-        
-    
 
 if __name__ == '__main__':
     name = Graph(11)
