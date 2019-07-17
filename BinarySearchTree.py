@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """
-Created on Fri Jan 11 17:16:09 2019
+Created on Fri Jan 11 21:48:58 2019
 
-@author: ThinkPad
+@author: soyam
 """
 
 
@@ -21,50 +21,86 @@ class BinarySearchTree:
     def is_root_empty(self):
         return self.root is None
 
-    def find_position(self, data, pos):
-        curr = pos
-        prev = curr
-        while curr is not None:
-            print(curr.data, data)
-            print(curr.left)
-            print(curr.right)
+    def find_position(self, data):
+        curr = self.root
+        while curr:
+            prev = curr
             if data <= curr.data:
                 if curr.left is None:
-                    return curr.left, prev
+                    break
                 curr = curr.left
-            elif data > curr.data:
+            else:
                 if curr.right is None:
-                    return curr.right, prev
+                    break
                 curr = curr.right
-        return curr
+        return curr, prev
 
     def add_node(self, data):
         new_node = self.Node(data)
-        curr = self.root
         if self.is_root_empty():
             self.root = new_node
         else:
-            curr, prev = self.find_position(data, self.root)
+            curr, prev = self.find_position(data)
             curr = new_node
-            print(prev.data, curr.data)
+            if(data <= prev.data):
+                prev.left = curr
+            else:
+                prev.right = curr
 
-    def preorder_traversal(self, root):
-        if root is not None:
-            curr = root
-            print(curr.data)
-            self.preorder_traversal(curr.left)
-            self.preorder_traversal(curr.right)
+    def print_preorder(self, root):
+        if root:
+            print(root.data)
+            self.print_preorder(root.left)
+            self.print_preorder(root.right)
 
     def preorder(self):
-        self.preorder_traversal(self.root)
+        print("preorder")
+        self.print_preorder(self.root)
+
+    def print_inorder(self, root):
+        if root:
+            self.print_inorder(root.left)
+            print(root.data)
+            self.print_inorder(root.right)
+
+    def inorder(self):
+        print("inorder")
+        self.print_inorder(self.root)
+
+    def print_postorder(self, root):
+        if root:
+            self.print_postorder(root.left)
+            self.print_postorder(root.right)
+            print(root.data)
+
+    def postorder(self):
+        print("postorder")
+        self.print_postorder(self.root)
+
+    def print_leaf_nodes(self, root):
+        if root:
+            self.print_leaf_nodes(root.left)
+            self.print_leaf_nodes(root.right)
+            if root.left is None and root.right is None:
+                print(root.data)
+
+    def print_leaf(self):
+        print("leaf nodes")
+        self.print_leaf_nodes(self.root)
 
 
 if __name__ == '__main__':
-
     name = BinarySearchTree()
-    print(name.add_node(15))
-    print(name.add_node(9))
-    print(name.add_node(10))
-#    print(name.add_node(50))
-#    print(name.add_node(30))
-#    print(name.preorder())
+    name.add_node(16)
+    name.add_node(5)
+    name.add_node(11)
+    name.add_node(17)
+    name.add_node(19)
+    name.add_node(31)
+    name.add_node(12)
+    name.add_node(17)
+    name.add_node(21)
+    name.preorder()
+    name.inorder()
+    name.postorder()
+    name.print_leaf()
